@@ -21,6 +21,7 @@
 
 module Main where
 import AST
+import Env
 import Interpretor
 --import Env
 import Parser
