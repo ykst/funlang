@@ -20,7 +20,7 @@ Please fix other external dependencies manually if required.
 
 ### Syntax (EBNF + Regular expression)
 ```haskell
-Program ::= {Statement "Än"}
+Program ::= {Statement "\n"}
 
 Statement ::= 
  	  FunctionDef
@@ -33,18 +33,18 @@ Statement ::=
  	| CallAccess
 
 Function ::= 
-	"fun" "(" Varlist ")" "Än" 
+	"fun" "(" Varlist ")" "\n" 
  			Program
 	End
 
-End ::= /ÄÄ_+/
+End ::= /\\_+/
 
-Varlist ::= É√ | Id {"," Id}
+Varlist ::= epsilon | Id {"," Id}
 
 Id ::= /[a-zA-Z][0-9a-zA-Z]*/
 
 InfixDef ::= 
-	InfixSpec "(" Id InfixOp Id ")" "Än" 
+	InfixSpec "(" Id InfixOp Id ")" "\n" 
  		Program
 	End
 
@@ -52,22 +52,22 @@ InfixSpec ::=
 	  /infixL[0-9]+/
 	| /infixR[0-9]+/
 
-InfixOp ::= /[!$%&<>?_*:;@/ÄÄ=|Ä-+.]+/
+InfixOp ::= /[!$%&<>?_*:;@/\\=|\-+.]+/
 
 VariableDef ::= 
 	"var" Id ["=" Expr]
 
 IfBlock ::=
-	"if" Expr "Än"
+	"if" Expr "\n"
 		Program
-	{"elsif" Expr "Än"
+	{"elsif" Expr "\n"
 		Program}
-	["else" "Än"
+	["else" "\n"
 		Program]
 	End
 
 WhileBlock ::= 
-	"while" Expr "Än"
+	"while" Expr "\n"
 		Program
 	End
 
@@ -83,7 +83,7 @@ CallAccess ::=
 Call ::= 
 	Method "(" Varlist ")"
 
-Method ::= /Ä$?[a-zA-Z][0-9a-zA-Z]*/
+Method ::= /\$?[a-zA-Z][0-9a-zA-Z]*/
 
 Expr ::= 
 	  Expr BinOp Expr 
@@ -113,18 +113,18 @@ BoolLiteral ::= "true" | "false"
 Every intrinsic functions are started by `$`. Our Helloworld is,
 
 ```
-$print("Hello WorldÄn")
+$print("Hello World\n")
 ```
 
 Other supported intrinsics are:
 
-* $eval(str) Åc eval string.
+* $eval(str) ... eval string.
 
-* $gc() Åc run gabage collection immediately.
+* $gc() ... run gabage collection immediately.
 
-* $exec(str) Åc execute external command and get stdout string as return value.
+* $exec(str) ... execute external command and get stdout string as return value.
 
-* $error(str) Åc throw an error. anyway, `catch` is not implemented :p
+* $error(str) ... throw an error. anyway, `catch` is not implemented :p
 
 ### Usage
 
@@ -134,20 +134,20 @@ The standalone binary (bin/fun) supports REPL by haskeline. Just run the binary 
 $ bin/fun
 > 1 + 1
 2
-> $print("Hello World!Än")
+> $print("Hello World!\n")
 Hello World!
 > :q
 $
 ```
 Following interpretor commands are supported:
 
-* :q Åc  quit REPL.
+* :q ... c  quit REPL.
 
-* :l Ä<filenameÄ> Åc  load a script file.
+* :l \<filename\> ... load a script file.
 
-* :c Åc initialize the runtime environment.
+* :c ... initialize the runtime environment.
 
-* :h Åc help.
+* :h ...  help.
 
 To execute a script file, pass the filepath to the binary.
 
